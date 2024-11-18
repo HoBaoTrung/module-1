@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tính được số ngày trong một tháng</title>
+</head>
+
+<body>
+    <form>
+        <input type="number" min="1" max="12" id="month">
+        <input onclick="getTheNumberOfDaysInMonth()" type="button" value="Tính số ngày">
+    </form>
+    <h2 id="result"></h2>
+</body>
+<script>
+    function getTheNumberOfDaysInMonth() {
+        let resultMessage;
+        let days;
+        let month = parseInt( document.getElementById("month").value);
+        console.info(month)
+        switch (month) {
+            case 1:
+            case 3:
+            case 5:
+            case 7:
+            case 8:
+            case 10:
+            case 12:
+                days = 31
+                break;
+            case 4:
+            case 6:
+            case 9:
+            case 11:
+                days = 30;
+                break;
+            case 2:
+                document.getElementById("result").textContent = "Tháng 2 có 28 hoặc 29 ngày";
+                return;
+            default:
+                alert("Please enter valid month!"); return
+        }
+        resultMessage = `Tháng ${month} có ` + days + " ngày";
+        document.getElementById("result").textContent = resultMessage;
+
+    }
+</script>
+
+</html>
