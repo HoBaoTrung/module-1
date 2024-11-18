@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toggle Switch with Label</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e8eff4;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* Option container now in column, centered */
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* Toggle Switch Container */
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 25px;
+        }
+
+        /* Hidden Checkbox */
+        input[type="checkbox"] {
+            display: none;
+        }
+
+        /* Slider */
+        .slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .slider::before {
+            content: "";
+            position: absolute;
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 3.5px;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        /* Checked State */
+        input[type="checkbox"]:checked+.slider {
+            background-color: var(--active-color);
+        }
+
+        #good+.slider {
+            --active-color: #4CAF50;
+            /* Green for Good */
+        }
+
+        #fast+.slider {
+            --active-color: #FF9800;
+            /* Orange for Fast */
+        }
+
+        #cheap+.slider {
+            --active-color: #2196F3;
+            /* Blue for Cheap */
+        }
+
+        input[type="checkbox"]:checked+.slider::before {
+            transform: translateX(25px);
+        }
+
+        /* Labels */
+        .label {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="option">
+        <div class="toggle-switch">
+            <input type="checkbox" id="good" onclick="updateSelection()">
+            <label class="slider" for="good"></label>
+        </div>
+        <span class="label">GOOD</span>
+    </div>
+    <div class="option">
+        <div class="toggle-switch">
+            <input type="checkbox" id="cheap" onclick="updateSelection()">
+            <label class="slider" for="cheap"></label>
+        </div>
+        <span class="label">CHEAP</span>
+    </div>
+    <div class="option">
+        <div class="toggle-switch">
+            <input type="checkbox" id="fast" onclick="updateSelection()">
+            <label class="slider" for="fast"></label>
+        </div>
+        <span class="label">FAST</span>
+    </div>
+</body>
+
+<script>
+    function updateSelection() {
+        const good = document.getElementById("good");
+        const fast = document.getElementById("fast");
+        const cheap = document.getElementById("cheap");
+
+        // Nếu cả 3 checkbox đều được chọn
+        if (good.checked) {
+            if (fast.checked) {
+                if (cheap.checked) {
+                    const randomIndex = Math.floor(Math.random() * 3);
+                    if (randomIndex === 0) {
+                        good.checked = false; // Bỏ chọn "good"
+                    } else if (randomIndex === 1) {
+                        fast.checked = false; // Bỏ chọn "fast"
+                    } else {
+                        cheap.checked = false; // Bỏ chọn "cheap"
+                    }
+                }
+            }
+        }
+    }
+
+</script>
+
+</html>
