@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sử dụng vòng lặp for</title>
+</head>
+
+<body>
+    <h2>JavaScript Loops</h2>
+    <p id="demo1"></p>
+
+    <h2>Calculate sum</h2>
+    <p id="demo2"></p>
+    <script>
+        // bài 1
+        let text = "";
+        for (let i = 0; i <= 5; i++) {
+            text += "The number is " + i + "<br>";
+        }
+        document.getElementById("demo1").innerHTML = text;
+
+        // bài 2
+        var num = prompt("Enter your number: ");
+        num = parseInt(num);
+        total = 0
+        if (num >= 0) {
+            // Tính tổng từ 0 đến num (nếu num là số dương)
+            for (let i = 0; i <= num; i++) {
+                total += i;
+            }
+        } else {
+            // Tính tổng từ 0 đến num (nếu num là số âm)
+            for (let i = 0; i >= num; i--) {
+                total += i;
+            }
+        }
+        document.getElementById("demo2").innerHTML = `Result: ${total}`;
+    </script>
+</body>
+
+</html>
