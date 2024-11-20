@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puzzle Game</title>
+</head>
+<style>
+    img {
+        margin-bottom: 10px;
+        display: flex;
+        width: 30%;
+    }
+</style>
+
+<body>
+    <img src="" id="part1" onclick="changeImg(1)" alt="">
+    <img src="" id="part2" onclick="changeImg(2)" alt="">
+    <img src="" id="part3" onclick="changeImg(3)" alt="">
+    <img src="" id="part4" onclick="changeImg(4)" alt="">
+    <img src="" id="part5" onclick="changeImg(5)" alt="">
+</body>
+<script>
+    let previousIndex = -1;
+    let part = [];
+    const animalArray = ["funny-cat1", "monkey", "panda_swap"];
+    function getRandomAnimal(index) {
+
+        let randomIndex;
+        do {
+            randomIndex = Math.floor(Math.random() * animalArray.length);
+        } while (randomIndex == part[index]); 
+
+        part[index] = randomIndex; 
+        return animalArray[randomIndex];
+
+    }
+
+    function checkComplete() {
+        for (let index = 2; index < part.length; index++) {
+            if (part[index] != part[index - 1]) { return false; }
+        }
+        return true;
+    }
+
+    function changeImg(index) {
+        const img = document.getElementById(`part${index}`);
+        const animal = getRandomAnimal(index);
+        img.src = `./picture/${animal}_part${index}x1.jpg`;
+        let isComplete = checkComplete();
+        if (isComplete) {
+            let style = document.createElement('style');
+            style.innerHTML = 'img {box-shadow: 10px 5px #6de50a;}';
+            document.head.appendChild(style);
+        }
+    }
+
+    function init() {
+        for (let index = 1; index <= document.getElementsByTagName('img').length; index++) {
+            randomIndex = Math.floor(Math.random() * animalArray.length);
+            img = document.getElementById(`part${index}`);
+            img.src = `./picture/${animalArray[randomIndex]}_part${index}x1.jpg`;
+            part[index] = `${randomIndex}`;
+        }
+    }
+
+    window.onload = init();
+
+</script>
+
+</html>
