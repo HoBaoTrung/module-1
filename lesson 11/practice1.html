@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luyện tập vòng lặp 01</title>
+</head>
+
+<body>
+    <p id="result"></p>
+    <button onclick="guess()">Bắt đầu</button>
+
+    <script>
+        //bai 1
+        // console.log("Bai 1");
+        // for (let index = 1; index <= 100; index++) {
+        //     console.log(index);
+        //     if (index == 99) alert("đã hoàn thành.")
+        // }
+
+        // //bai 2
+        // let temperature;
+        // do {
+        //     temperature = prompt("Nhập nhiệt đô:")
+        //     if (temperature > 100) alert("yêu cầu giảm nhiệt độ")
+        //     if (temperature < 20) alert("yêu cầu tăng nhiệt độ")
+        // } while (temperature > 100 || temperature < 20);
+
+        //bai 3: Hiển thị ra 20 số trong dãy fibonacci đầu tiên.
+        var a = 0, b = 1;
+        var fibo = `${a}; ${b}; `
+        for (let i = 3; i <= 20; i++) {
+            let next = a + b;
+            fibo += next + "; ";
+            a = b;
+            b = next;
+        }
+        document.getElementById("result").innerHTML = (fibo + "<br>")
+
+        //Bài 4: Tìm số đầu tiên trong dãy fibonacci chia hết cho 5.
+        a = 0, b = 1;
+        for (let i = 3; i <= 20; i++) {
+            let next = a + b;
+            if (next % 5 == 0) {
+                document.getElementById("result").innerHTML += ("Số đầu tiên trong dãy fibonacci chia hết cho 5: " + next + "<br>")
+                break;
+            }
+            a = b;
+            b = next;
+        }
+
+        //Bài 5: Tính tổng của 20 số đầu tiên trong dãy fibonacci.
+        a = 0, b = 1;
+        var sum = a + b;
+        for (let i = 3; i <= 20; i++) {
+            let next = a + b;
+            sum += next;
+            a = b;
+            b = next;
+        }
+        document.getElementById("result").innerHTML += ("Tổng của 20 số đầu tiên trong dãy fibonacci: " + sum + "<br>")
+
+        //Bài 6: Tính tổng của 30 số đầu tiên chia hết cho 7 trong các số tự nhiên.
+        sum = 0
+        var count = a = 0;
+        while (count < 30) {
+            if (a % 7 == 0) {
+                count++;
+                sum += a;
+            }
+            a++;
+        }
+        document.getElementById("result").innerHTML += ("Tính tổng của 30 số đầu tiên chia hết cho 7: " + sum + "<br>")
+
+        //Bài 7
+        var text = ""
+        for (let index = 1; index <= 100; index++) {
+            let output = "";
+            if (index % 3 === 0) output += "Fizz";
+            if (index % 5 === 0) output += "Buzz";
+            text += output || index;
+            if (index < 100) text += ", ";
+        }
+        document.getElementById("result").innerHTML += (text + "<br>");
+
+        //Bài 8
+        function guess() {
+            const maxGuesses = 3; // Số lần đoán tối đa
+            let maxNumber = Number(prompt("Số lớn nhất có thể là bao nhiêu?"));
+
+            if (isNaN(maxNumber) || maxNumber <= 0) {
+                alert("Vui lòng nhập một số hợp lệ.");
+                return;
+            }
+
+            const randomNum = Math.ceil(Math.random() * maxNumber);
+            let count = 0;
+
+            while (count < maxGuesses) {
+                let guess = Number(prompt(`Lần đoán ${count + 1}/${maxGuesses}: Nhập số bạn đoán`));
+
+                if (isNaN(guess)) {
+                    alert("Vui lòng nhập một số hợp lệ.");
+                    continue;
+                }
+
+                count++;
+                if (guess === randomNum) {
+                    alert("Bạn đã đoán đúng số. Chúc mừng bạn!");
+                    document.getElementById("result").innerHTML += "Bạn đã đoán đúng số. Chúc mừng bạn!";
+                    return;
+                }
+
+                alert(guess < randomNum ? "Số bạn đoán bé hơn." : "Số bạn đoán lớn hơn.");
+            }
+
+            alert("Bạn hết số lần đoán!");
+            document.getElementById("result").innerHTML += "Bạn hết số lần đoán!";
+        }
+
+
+    </script>
+</body>
+
+</html>
