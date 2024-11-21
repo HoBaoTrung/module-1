@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hiển thị các số nguyên tố đầu tiên</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    let number ;
+    do {
+        number = prompt("Nhập số lượng số nguyên tố:")
+    } while (number < 1);
+    let n = 2;
+    let count = 0;
+    let text = "";
+    let isPrime;
+    while (count < number) {
+        isPrime = true;
+        for (let i = 2; i <= Math.sqrt(n); i++) {
+            if (n % i === 0) isPrime = false;
+        }
+        if (isPrime) {
+            count++;
+            text += n + '<br>';
+        }
+        n++;
+    }
+    document.write(text)
+</script>
+
+</html>
