@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bảng cửu chương</title>
+</head>
+<style>
+    table {
+        width: 100%;
+        /* Điều chỉnh kích thước bảng */
+        border-collapse: collapse;
+        /* Gộp viền giữa các ô */
+        margin: 20px ;
+        /* Thêm khoảng cách giữa bảng và các thành phần khác */
+    }
+
+    table,
+    td {
+        padding: 10px ;
+        border: 1px solid #333;
+        /* Tạo viền cho bảng và ô */
+    }
+</style>
+
+<body>
+
+</body>
+<script>
+    let multiplication = '<table>';
+    for (let i = 1; i <= 10; i++) {
+        multiplication += '<tr  style="border:1px;padding:5px">';
+        for (let j = 2; j <= 9; j++) {
+            multiplication += `<td>${j}x${i}=${i * j}</td>`;
+        }
+        multiplication += '</tr>';
+    }
+    multiplication += '</table>';
+    document.write(multiplication)
+</script>
+
+</html>
