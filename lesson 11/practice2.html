@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luyện tập vòng lặp 02</title>
+</head>
+
+<body>
+    <p id="result"></p>
+</body>
+<script>
+    let n = 5;
+    // Bài 1: In dãy Fibonaci
+    var a = 0, b = 1;
+    var fibo = `${a}; ${b}; `
+    for (let i = 3; i <= n; i++) {
+        let next = a + b;
+        fibo += next + "; ";
+        a = b;
+        b = next;
+    }
+    document.getElementById("result").innerHTML = (fibo + "<br>")
+
+    // Bài 2: Tính giai thừa của một số nguyên dương
+    let result = 1;
+    if (n > 0) {
+        for (let index = 1; index <= n; index++) {
+            result *= index
+        }
+    } else if (n == 0) { result = 1; }
+    else { result = "phai la so nguyen duong" }
+    document.getElementById("result").innerHTML += (`Giai thừa của ${n}: ${result} <br>`)
+
+    // Bài 3: In tam giác vuông. Các góc vuông nằm ở các vị trí khác nhau
+    triangle1 = triangle2 = triangle3 = triangle4 = ""
+    for (let i = 1; i <= n; i++) {
+        for (let j = 1; j <= i; j++) {
+            triangle1 += "*"
+        }
+        triangle1 += "\n"
+
+        for (let j = n - i + 1; j > 0; j--) {
+            triangle2 += "*"
+        }
+        triangle2 += "\n"
+
+        for (let j = n; j > 0; j--) {
+            if (j > i) triangle3 += " ";
+            else triangle3 += `*`;
+        }
+        triangle3 += "\n"
+
+        for (let j = n; j > 0; j--) {
+            if (j >= i) triangle4 += "*";
+            else triangle4 += ` `;
+        }
+        triangle4 += "\n"
+    }
+    console.log(triangle1)
+    console.log(triangle2)
+    console.log(triangle3)
+    console.log(triangle4)
+
+    //Bài 4: In hình chữ nhật
+    let cd = 12, cr = 7, rectangle = '';
+    for (let index = 1; index <= cr; index++) {
+        for (let j = 1; j <= cd; j++) {
+            rectangle += index == 1 || index == cr || j == 1 || j == cd ?
+                "*" : " "
+        } rectangle += "\n";
+    }
+    console.log(rectangle)
+
+    // Bài 5
+    let initialAmount = 1000000;
+    let soThang = 12;
+    let laiSuat = 1;
+    let rate = soThang / 100;
+    document.getElementById("result").innerHTML += (`<h4 style="margin-bottom:0">Bài 5</h4> Số tiền vay ${initialAmount}, lãi suất ${laiSuat}% <br>`)
+
+    // Công thức lãi kép: A = P * (1 + r)^t
+    let totalAmount = initialAmount * Math.pow((1 + rate), soThang);
+    document.getElementById("result").innerHTML += (`Số tiền sau ${soThang} tháng là: ${totalAmount.toFixed(2)} VNĐ <br>`)
+
+    //Bài 6
+    function printHeard(size) {
+        let output = '';
+
+        for (let i = 0; i < size; i++) {
+            if(i<2) continue;
+            let row = ' ';
+
+            // Tam giác trái
+            for (let j = 0; j < size - i - 1; j++) {
+                row += ' '; // Thêm 1 khoảng trắng
+            }
+            for (let j = 0; j <= i * 2; j++) {
+                
+                row += '*'; // Thêm dấu sao
+            }
+
+            // Khoảng cách giữa hai tam giác
+            row += ' ';
+
+            // Tam giác phải
+            for (let j = 0; j < size - i - 1; j++) {
+                row += '  '; // Thêm 2 khoảng trắng
+            }
+            for (let j = 0; j <= i * 2; j++) {
+                row += '*'; // Thêm dấu sao
+            }
+
+            output += row + '\n';
+        }
+    
+        for (let i = 0; i < size*2+1; i++) {
+        let row = '';
+
+        // Chèn khoảng trắng phía trước
+        for (let j = 0; j < i; j++) {
+            row += ' ';
+        }
+
+        // In các ký tự '*'
+        for (let j = 0; j < 2 * (size*2 - i )+1; j++) {
+            row += '*';
+        }
+        output += row + '\n';
+    }
+        console.log(output);
+    }
+
+    // Gọi hàm
+    printHeard(4);
+
+
+
+</script>
+
+</html>
