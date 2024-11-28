@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luyện tập cấu trúc điều kiện 02</title>
+</head>
+<style>
+    table {
+        width: 100%;
+        /* Điều chỉnh kích thước bảng */
+        border-collapse: collapse;
+        /* Gộp viền giữa các ô */
+        margin: 20px 0;
+        /* Thêm khoảng cách giữa bảng và các thành phần khác */
+    }
+
+    table,
+    td {
+        border: 1px solid #333;
+        /* Tạo viền cho bảng và ô */
+    }
+</style>
+
+<body>
+    <table>
+        <tr>
+            <td>Bài 1</td>
+            <td>
+                <label for="celsius">Nhập độ C:</label>
+                <input type="number" id="celsius">
+                <button onclick="celsiusToFahrenheit()">Tính</button>
+                <h4 id="result1"></h4>
+            </td>
+        </tr>
+        <tr>
+            <td>Bài 2</td>
+            <td>
+                <label for="meters">Nhập mét:</label>
+                <input type="number" id="meters">
+                <button onclick="convertMetersToFeet()">Tính</button>
+                <h4 id="result2"></h4>
+            </td>
+        </tr>
+        <tr>
+            <td>Bài 3</td>
+            <td>
+                <label for="canhhinhvuong">Nhập cạnh hình vuông:</label>
+                <input type="number" id="canhhinhvuong">
+                <button onclick="tinhDienTichHinhVuong()">Tính</button>
+                <h4 id="result3"></h4>
+            </td>
+        </tr>
+        <tr>
+            <td>Bài 4</td>
+            <td>
+                <label for="canhA">Nhập cạnh thứ nhất:</label>
+                <input type="number" id="canhA"><br><br>
+                <label for="canhB">Nhập cạnh thứ hai:</label>
+                <input type="number" id="canhB">
+                <button onclick="tinhDienTichHinhChuNhat()">Tính</button>
+                <h4 id="result4"></h4>
+            </td>
+        </tr>
+        <tr>
+            <td>Bài 5</td>
+            <td>
+                <label for="canhA">Nhập cạnh kề thứ nhất:</label>
+                <input type="number" id="canhkeA"><br><br>
+                <label for="canhB">Nhập cạnh kề thứ hai:</label>
+                <input type="number" id="canhkeB">
+                <button onclick="tinhDienTichTamGiacVuong()">Tính</button>
+                <h4 id="result5"></h4>
+            </td>
+        </tr>
+        <tr>
+            <td>Bài 6</td>
+            <td>
+                <h2>ax + b = 0</h2>
+                <label for="numA">Nhập số a:</label>
+                <input type="number" id="numA"><br><br>
+                <label for="numB">Nhập số b:</label>
+                <input type="number" id="numB">
+                <button onclick="giaiPTBac1(
+                    parseFloat(document.getElementById('numA').value), 
+                    parseFloat(document.getElementById('numB').value),
+                )">Tính</button>
+                <h4 id="result6"></h4>
+            </td>
+        </tr>
+        <tr>
+            <td>Bài 7</td>
+            <td>
+                <h2>ax² + bx + c = 0</h2>
+                <label for="numberA">Nhập số a:</label>
+                <input type="number" id="numberA"><br><br>
+                <label for="numberB">Nhập số b:</label>
+                <input type="number" id="numberB"><br><br>
+                <label for="numberC">Nhập số c:</label>
+                <input type="number" id="numberC">
+                <button onclick="giaiPTBac2()">Tính</button>
+                <h4 id="result7"></h4>
+            </td>
+        </tr>
+        <tr>
+            <td>Bài 8</td>
+            <td>
+                <label for="age">Nhập số tuổi:</label>
+                <input type="number" id="age"><br><br>
+                <button onclick="checkAge()">Tính</button>
+                <h4 id="result8"></h4>
+            </td>
+        </tr>
+        <tr>
+            <td>Bài 9</td>
+            <td>
+                <label for="a">Nhập cạnh a:</label>
+                <input type="number" id="a"><br><br>
+                <label for="b">Nhập cạnh b:</label>
+                <input type="number" id="b"><br><br>
+                <label for="b">Nhập cạnh c:</label>
+                <input type="number" id="c"><br><br>
+                <button onclick="checkTamGiac()">Tính</button>
+                <h4 id="result9"></h4>
+            </td>
+        </tr>
+        <tr>
+            <td>Bài 10</td>
+            <td>
+                <h2>Tính tiền điện</h2>
+                <form id="electricityForm">
+                    <label for="kwh">Nhập số kWh tiêu thụ:</label>
+                    <input type="number" id="kwh" name="kwh" min="0" required>
+                    <button type="button" onclick="calculateElectricity()">Tính tiền</button>
+                </form>
+                <h3>Kết quả:</h3>
+                <p id="result10"></p>
+            </td>
+        </tr>
+        <tr>
+            <td>Bài 11</td>
+            <td>
+                <h2>Tính thuế thu nhập cá nhân</h2>
+                <form id="taxForm">
+                    <label for="income">Tổng thu nhập (VND):</label>
+                    <input type="number" id="income" name="income" min="0" required>
+                    <br><br>
+                    <label for="personalReduction">Giảm trừ bản thân (VND):</label>
+                    <input type="number" id="personalReduction" name="personalReduction" value="11000000" readonly>
+                    <br><br>
+                    <label for="dependentReduction">Số người phụ thuộc:</label>
+                    <input type="number" id="dependents" name="dependents" min="0" value="0">
+                    <br><br>
+                    <button type="button" onclick="calculateTax()">Tính thuế</button>
+                </form>
+                <h3>Kết quả:</h3>
+                <p id="result11"></p>
+            </td>
+        </tr>
+        <tr>
+            <td>Bài 12</td>
+            <td>
+                <label for="initialAmount">Số tiền ban đầu (VND):</label>
+                <input type="number" id="initialAmount" name="initialAmount" min="0" required>
+                <br><br>
+                <label for="loanMonths">Số tháng</label>
+                <input type="number" id="loanMonths" name="loanMonths" value="0" min="1">
+                <br><br>
+                <button type="button" onclick="calculateCompoundInterest()">Tính lãi</button>
+                <p id="result12"></p>
+            </td>
+        </tr>
+    </table>
+</body>
+<script>
+    function celsiusToFahrenheit() {
+        let celsius = document.getElementById("celsius").value;
+        document.getElementById("result1").innerHTML = "Độ F: " + (celsius * 9 / 5) + 32;
+    }
+
+    function convertMetersToFeet() {
+        const metersToFeet = 3.28084; // 1 meter = 3.28084 feet
+        let meters = document.getElementById("meters").value;
+        if (meters >= 0) { document.getElementById("result2").innerHTML = "Feet: " + meters * metersToFeet; }
+        else { alert("Số mét phải lớn hơn 0") }
+    }
+
+    function tinhDienTichHinhVuong() {
+        let a = document.getElementById("canhhinhvuong").value;
+        if (a > 0) { document.getElementById("result3").innerHTML = "Diện tích: " + a * a; }
+        else { alert("Cạnh của hình vuông phải lớn hơn 0") }
+    }
+
+    function tinhDienTichHinhChuNhat() {
+        let a = document.getElementById("canhA").value;
+        let b = document.getElementById("canhB").value;
+        if (a > 0 && b > 0) { document.getElementById("result4").innerHTML = "Diện tích: " + a * b; }
+        else { alert("Cạnh của hình chữ nhật phải lớn hơn 0") }
+    }
+
+    function tinhDienTichTamGiacVuong() {
+        let a = document.getElementById("canhkeA").value;
+        let b = document.getElementById("canhkeB").value;
+        if (a > 0 && b > 0) { document.getElementById("result5").innerHTML = "Diện tích: " + (a * b) / 2; }
+        else { alert("Chiều dài các cạnh phải lớn hơn 0") }
+    }
+
+    function giaiPTBac1(a, b, id = 'result6') {
+
+        if (a === 0) {
+            if (b === 0) {
+                return "Phương trình vô số nghiệm";
+            } else {
+                return "Phương trình vô nghiệm";
+            }
+        }
+        const x = -b / a;
+        document.getElementById(id).innerHTML = `Nghiệm của phương trình là x = ${x}`;
+
+    }
+
+    function giaiPTBac2() {
+        let a = document.getElementById("numberA").value;
+        let b = document.getElementById("numberB").value;
+        let c = document.getElementById("numberC").value;
+
+        if (a == 0) {
+            // Nếu a = 0, thì đây là phương trình bậc 1
+            giaiPTBac1(b, c, "result7");
+            return;
+        }
+        let kq;
+        const delta = b * b - 4 * a * c;
+
+        if (delta < 0) {
+            kq = "Phương trình vô nghiệm";
+        } else if (delta === 0) {
+            const x = -b / (2 * a);
+            kq = `Phương trình có nghiệm kép x = ${x}`;
+        } else {
+            const sqrtDelta = Math.sqrt(delta);
+            const x1 = (-b + sqrtDelta) / (2 * a);
+            const x2 = (-b - sqrtDelta) / (2 * a);
+            kq = `Phương trình có 2 nghiệm phân biệt:\n x1 = ${x1}\n x2 = ${x2}`;
+        }
+        document.getElementById("result7").innerHTML = kq;
+
+    }
+
+    function checkAge() {
+        let age = document.getElementById("age").value;
+        if (age > 0 && age < 120) {
+            alert('Đúng tuổi')
+        } else { alert("Sai tuổi") }
+    }
+
+    function checkTamGiac() {
+        let isTriangle = true;
+        let a = Number(document.getElementById("a").value);
+        let b = Number(document.getElementById("b").value);
+        let c = Number(document.getElementById("c").value);
+        if (a <= 0 || b <= 0 || c <= 0) {
+            isTriangle = false;
+        } else {
+            isTriangle = (a + b > c) && (a + c > b) && (b + c > a);
+        }
+        const result = document.getElementById("result9");
+        if (isTriangle) {
+            result.textContent = "Đây là 3 cạnh của một tam giác.";
+        } else {
+            result.textContent = "Đây không phải là 3 cạnh của một tam giác.";
+        }
+    }
+
+    function calculateElectricity() {
+        const kwh = parseFloat(document.getElementById("kwh").value);
+        if (isNaN(kwh) || kwh < 0) {
+            document.getElementById("result").innerText = "Vui lòng nhập số kWh hợp lệ.";
+            return;
+        }
+
+        // Mức giá điện
+        const rate1 = 1678; // 0-50 kWh
+        const rate2 = 1734; // 51-100 kWh
+        const rate3 = 2014; // 101-200 kWh
+        const rate4 = 2536; // 201-300 kWh
+        const rate5 = 2834; // 301-400 kWh
+        const rate6 = 2927; // >400 kWh
+        let cost = 0;
+
+        if (kwh <= 50) {
+            cost = kwh * rate1;
+        } else if (kwh <= 100) {
+            cost = 50 * rate1 + (kwh - 50) * rate2;
+        } else if (kwh <= 200) {
+            cost = 50 * rate1 + 50 * rate2 + (kwh - 100) * rate3;
+        } else if (kwh <= 300) {
+            cost = 50 * rate1 + 50 * rate2 + 100 * rate3 + (kwh - 200) * rate4;
+        } else if (kwh <= 400) {
+            cost = 50 * rate1 + 50 * rate2 + 100 * rate3 + 100 * rate4 + (kwh - 300) * rate5;
+        } else {
+            cost = 50 * rate1 + 50 * rate2 + 100 * rate3 + 100 * rate4 + 100 * rate5 + (kwh - 400) * rate6;
+        }
+        // Hiển thị kết quả
+        document.getElementById("result10").innerText =
+            `Tổng tiền điện cho ${kwh} kWh là: ${cost.toLocaleString()} VND.`;
+    }
+
+    function calculateTax() {
+        const income = parseFloat(document.getElementById("income").value);
+
+        if (isNaN(income) || income <= 0) {
+            document.getElementById("result11").innerText = "Vui lòng nhập tổng thu nhập hợp lệ.";
+            return;
+        }
+        const personalReduction = parseFloat(document.getElementById("personalReduction").value);; // Giảm trừ bản thân 11tr
+        const dependents = parseInt(document.getElementById("dependents").value) || 0; // số người phụ thuộc
+        const dependentReduction = dependents * 4400000; // Giảm trừ cho mỗi người phụ thuộc
+        const socialInsurance = income * 0.08;
+        const healthInsurance = income * 0.015;
+        const unemploymentInsurance = income * 0.01;
+
+        // Tính số tiền chịu thuế
+        const taxableIncome = income - personalReduction - dependentReduction - socialInsurance - healthInsurance - unemploymentInsurance;
+        if (taxableIncome <= 0) {
+            document.getElementById("result11").innerText = "Thu nhập chịu thuế = 0. Không cần nộp thuế.";
+            return;
+        }
+
+        // Tính thuế TNCN theo biểu lũy tiến từng phần
+        const taxBrackets = [
+            { limit: 5000000, rate: 0.05 },
+            { limit: 10000000, rate: 0.1 },
+            { limit: 18000000, rate: 0.15 },
+            { limit: 32000000, rate: 0.2 },
+            { limit: 52000000, rate: 0.25 },
+            { limit: 80000000, rate: 0.3 },
+            { limit: Infinity, rate: 0.35 }
+        ];
+
+        let remainingIncome = taxableIncome;
+        let tax = 0;
+      
+        for (let i = 0; i < taxBrackets.length; i++) {
+           
+            const { limit, rate } = taxBrackets[i];
+            const prevLimit = i === 0 ? 0 : taxBrackets[i - 1].limit;
+
+            if (remainingIncome > 0) {
+                const taxableAtThisRate = Math.min(remainingIncome, limit - prevLimit);
+                tax += taxableAtThisRate * rate;
+                remainingIncome -= taxableAtThisRate;
+            }else{break;}
+        }
+
+        // Hiển thị kết quả
+        document.getElementById("result11").innerText =
+            `Bảo hiểm y tế: ${healthInsurance.toLocaleString()} VND\n` +
+            `Bảo hiểm xã hội: ${socialInsurance.toLocaleString()} VND\n` +
+            `Bảo hiểm thất nghiệp: ${unemploymentInsurance.toLocaleString()} VND\n` +
+            `Thu nhập chịu thuế: ${taxableIncome.toLocaleString()} VND\n` +
+            `Số thuế phải nộp: ${tax.toLocaleString()} VND`;
+    }
+
+    // Bài 12
+    function calculateCompoundInterest() {
+        let initialAmount = document.getElementById("initialAmount").value;
+        let soThang = document.getElementById("loanMonths").value;
+        let laiSuat = 1;
+        let rate = soThang / 100;
+
+        // Công thức lãi kép: A = P * (1 + r)^t
+        let totalAmount = initialAmount * Math.pow((1 + rate), soThang);
+        document.getElementById("result12").innerHTML += (`Số tiền sau ${soThang} tháng là: ${totalAmount.toFixed(2)} VNĐ <br>`)
+    }
+</script>
+
+</html>
