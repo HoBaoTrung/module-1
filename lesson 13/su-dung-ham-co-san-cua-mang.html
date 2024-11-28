@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sử dụng các hàm có sẵn của mảng</title>
+</head>
+<body>
+    
+</body>
+<script>
+    // Bài 1: Viết một chương trình Javascript để nối tất cả các phần tử trong một mảng chuỗi lại với nhau.
+    myColor = ["Red", "Green", "White", "Black"];
+    console.log(myColor.join(","));
+
+    // Bài 2: Viết một chương trình nhận một số nhập vào và chèn dấu (-) giữa 2 số chẵn.
+    let number = prompt("Nhập vào một số")
+    let str = number.toString();
+    let result = "";
+
+    for (let i = 0; i < str.length; i++) {
+        // Thêm số hiện tại vào chuỗi kết quả
+        result += str[i];
+
+        // Kiểm tra nếu cả số hiện tại và số tiếp theo đều là số chẵn
+        if (i < str.length - 1 && parseInt(str[i]) % 2 === 0 && parseInt(str[i + 1]) % 2 === 0) {
+            result += '-';
+        }
+    }
+    console.log("Chuỗi ban đầu:", str);
+    console.log("Kết quả:", result);
+
+    // Bài 3: Viết một chương trình nhập vào một chuỗi và chuyển các ký tự chữ thường trong chuỗi vừa nhập sang thành dạng chữ hoa và ngược lại
+    str = prompt("Nhập chuỗi:")
+    result = '';
+    let char;
+    for (let i = 0; i < str.length; i++) {
+        char = str[i];
+        
+        // Kiểm tra và chuyển đổi chữ cái
+        if (char >= 'a' && char <= 'z') {
+            result += char.toUpperCase(); // Chữ thường -> Chữ hoa
+        } else if (char >= 'A' && char <= 'Z') {
+            result += char.toLowerCase(); // Chữ hoa -> Chữ thường
+        } else {
+            result += char; // Giữ nguyên ký tự không phải chữ cái
+        }
+    }
+    console.log("Chuỗi ban đầu:", str);
+    console.log("Kết quả:", result);
+</script>
+</html>
