@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ứng dụng Từ điển</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+    input {
+      padding: 10px;
+      width: 300px;
+      margin: 10px;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .result {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Từ điển Anh - Việt</h1>
+  <input type="text" id="wordInput" placeholder="Nhập từ cần tra">
+  <button onclick="translateWord()">Tra từ</button>
+  <div class="result" id="result"></div>
+
+  <script>
+    const english = ['hello','world','apple','computer','book','love','friend','school','car','house'];
+    const vietnamese = ['Xin chào','Thế giới','Quả táo','Máy tính','Sách','Yêu','Bạn bè','Trường học','Xe hơi','Ngôi nhà'];
+    function translateWord() {
+      const input = document.getElementById("wordInput").value.toLowerCase();
+      const result = document.getElementById("result");
+      let index = english.indexOf(input);
+      if (index != -1) {
+        result.textContent = `Dịch: ${vietnamese[index]}`;
+      } else {
+        result.textContent = "Không tìm thấy từ này trong từ điển!";
+      }
+    }
+  </script>
+</body>
+</html>
