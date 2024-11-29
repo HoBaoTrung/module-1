@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luyện tập tạo và sử dụng hàm 01</title>
+</head>
+
+<body>
+    <h2>Bài 1. Chào mừng bạn đến với trang web</h2>
+    <button onclick="alertMessage()">Hiển thị thông báo</button>
+
+    <h2>Bài 2. Tăng giá trị số lên 1</h2>
+    <label for="inputNumber">Nhập số:</label>
+    <input type="number" id="inputNumber">
+    <button onclick="showIncrementedValue()">Tăng giá trị</button>
+    <p id="result2"></p>
+
+    <h2>Bài 3. Nhập hai số để so sánh</h2>
+    <label for="number1">Số thứ nhất:</label>
+    <input type="number" id="number1"><br><br>
+
+    <label for="number2">Số thứ hai:</label>
+    <input type="number" id="number2"><br><br>
+
+    <button onclick="processNumbers()">Kiểm tra</button>
+    <p id="result3"></p>
+
+    <h2>Nhập tên ngôi sao để tìm chòm sao tương ứng</h2>
+    <button onclick="findConstellation()">Tìm Chòm Sao</button>
+    <p id="result5"></p>
+</body>
+<script>
+    function alertMessage() {
+        alert("Xin chào");
+    }
+
+    function increment(number) {
+        return number + 1;
+    }
+
+    function showIncrementedValue() {
+        const input = document.getElementById('inputNumber').value;
+        const number = parseFloat(input);
+        if (isNaN(number)) {
+            document.getElementById('result2').innerText = "Vui lòng nhập một số hợp lệ.";
+        } else {
+            const incrementedValue = increment(number);
+            document.getElementById('result2').innerText = `Giá trị sau khi tăng: ${incrementedValue}`;
+        }
+    }
+
+
+    function compareAndSum(a, b) {
+        if (a > b) {
+            alert("Tham số thứ nhất lớn hơn tham số thứ hai!");
+        } else {
+            return a + b;
+        }
+    }
+
+    function processNumbers() {
+        const num1 = parseFloat(document.getElementById('number1').value);
+        const num2 = parseFloat(document.getElementById('number2').value);
+
+        if (isNaN(num1) || isNaN(num2)) {
+            document.getElementById('result3').innerText = "Vui lòng nhập hai số hợp lệ.";
+        } else {
+            const result = compareAndSum(num1, num2);
+            if (result !== undefined) {
+                document.getElementById('result3').innerText = `Tổng của hai số: ${result}`;
+            } else {
+                document.getElementById('result3').innerText = "";
+            }
+        }
+    }
+
+
+    // Bài 4: 
+    function addNumbers() {
+        firstNum = 4;
+        secondNum = 8;
+        result = firstNum + secondNum;
+        return result;
+    }
+    result = 0;
+    alert(result)
+    result = addNumbers();
+    alert(result)
+
+    // Bài 5
+    // Mảng chứa tên các ngôi sao
+    const stars = ["Polaris", "Aldebaran", "Deneb", "Vega", "Altair", "Dubhe", "Regulus"];
+
+    // Mảng chứa tên các chòm sao tương ứng
+    const constellations = ["Ursa Minor", "Taurus", "Cygnus", "Lyra", "Aquila", "Ursa Major", "Leo"];
+    // Hàm tìm chòm sao từ tên ngôi sao
+    function getConstellation(starName) {
+        const index = stars.indexOf(starName); // Tìm chỉ số của ngôi sao
+        if (index !== -1) {
+            return constellations[index]; // Trả về chòm sao tương ứng
+        } else {
+            return null; // Trả về null nếu không tìm thấy
+        }
+    }
+
+    // Hàm in hoa chữ cái đầu
+    function capitalizeFirstLetter(str) {
+        if (str.length === 0) {
+            return ''; // Trả về chuỗi rỗng nếu đầu vào là chuỗi rỗng
+        }
+        return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+    // Hàm gọi khi nhấn nút
+    function findConstellation() {
+        const starName = capitalizeFirstLetter(prompt("Nhập tên ngôi sao bạn muốn tìm:")); // Yêu cầu người dùng nhập ngôi sao
+        if (starName) {
+            const constellation = getConstellation(starName.trim());
+            if (constellation) {
+                document.getElementById("result5").innerText = `${starName} thuộc chòm sao ${constellation}.`;
+            } else {
+                document.getElementById("result5").innerText = `Không tìm thấy chòm sao cho ngôi sao "${starName}".`;
+            }
+        } else {
+            document.getElementById("result5").innerText = "Vui lòng nhập tên ngôi sao.";
+        }
+    }
+</script>
+
+</html>
