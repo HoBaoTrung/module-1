@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Sản Phẩm</title>
+    <style>
+        table {
+            width: 50%;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        tr:nth-child(even) {
+            background-color: rgb(242 242 242);
+        }
+
+        button {
+            border-radius: 10px;
+            padding: 10px;
+            color: white;
+            background-color: rgb(80 175 80);
+        }
+
+        button:hover {
+            cursor: pointer;
+        }
+
+        form {
+            display: block;
+            padding: 30px;
+            background-color: rgb(242 242 242);
+            width: 30%;
+        }
+
+        input {
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Quản Lý Sản Phẩm</h1>
+
+    <!-- Form thêm sản phẩm -->
+    <h3>Thêm sản phẩm mới</h3>
+    <form>
+        <input type="text" id="newProductName" placeholder="Tên sản phẩm" required>
+        <button onclick="addProduct()">Thêm</button>
+    </form>
+
+    <!-- Danh sách sản phẩm -->
+    <h3>Danh sách sản phẩm</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Tên Sản Phẩm</th>
+            </tr>
+        </thead>
+        <tbody id="productTable">
+        </tbody>
+    </table>
+
+    <script>
+        let products = [
+            "iPhone 14",
+            "Samsung Galaxy S23",
+            "Google Pixel 8",
+            "OnePlus 11",
+            "Xiaomi Mi 13",
+            "Sony Xperia 5 IV",
+            "Oppo Find X5",
+            "Huawei P50 Pro",
+            "Nokia G50",
+            "Asus ROG Phone 6"
+        ];
+
+        function displayProducts() {
+            const table = document.getElementById("productTable");
+            table.innerHTML = "";
+            products.forEach((product, index) => {
+                const row = `
+                    <tr>
+                        <td>${product}</td>
+                        <td>
+                            <button onclick="editProduct(${index})">Chỉnh sửa</button>
+                        </td>
+                        <td>
+                            <button onclick="deleteProduct(${index})">Xoá</button>
+                        </td>
+                    </tr>
+                `;
+                table.innerHTML += row;
+            });
+        }
+
+        function addProduct() {
+            const newProductName = document.getElementById("newProductName").value.trim();
+            if (newProductName) {
+                products.unshift(newProductName);
+                document.getElementById("newProductName").value = "";
+                displayProducts();
+            }
+        }
+
+        function editProduct(index) {
+            let newProductName = prompt("Chỉnh sửa tên sản phẩm", products[index])
+            if (newProductName !== null) {
+                products[index] = newProductName
+                displayProducts();
+            }
+        }
+
+        function deleteProduct(index) {
+            products.splice(index, 1);
+            displayProducts();
+        }
+
+        // Hiển thị danh sách sản phẩm khi tải trang
+        displayProducts();
+    </script>
+</body>
+
+</html>
