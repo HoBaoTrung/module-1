@@ -59,7 +59,7 @@
     <table>
         <thead>
             <tr>
-                <th>Tên Sản Phẩm</th>
+                <th>Tên Sản Phẩm <span id="quantity"></span></th>
             </tr>
         </thead>
         <tbody id="productTable">
@@ -97,6 +97,9 @@
                 `;
                 table.innerHTML += row;
             });
+            let quantityElement = document.getElementById("quantity");
+            quantityElement.innerText = `(${products.length} sản phẩm)`
+            quantityElement.style.color = "red";
         }
 
         function addProduct() {
