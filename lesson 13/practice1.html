@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luyện tập mảng 01</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    // Bài 1
+    let arr = [1, 5, 10, 9, 31, 1, 5, 8, 20, 6]
+    let count = 0;
+    arr.forEach((item) => {
+        if (item >= 10) {
+            count++;
+        }
+    })
+    console.log(arr)
+    console.log("Số phần tử lớn hơn hoặc bằng 10: ", count)
+
+    // Bài 2
+    max = Math.max(...arr)
+    index = arr.indexOf(max)
+    console.log('Max:', max, ", vị trí:", index)
+
+    // Bài 3
+    let sum = 0;
+    for (let num of arr) {
+        sum += num;
+    }
+    console.log('Tổng giá trị trong mảng:', sum)
+
+    // Bài 4
+    console.log('Mảng đảo ngược', arr.reverse())
+
+    // Bài 5
+    str = "vnjkdn-2sdv-2dv4-9"
+    console.log(str)
+    console.log("Số lượng nguyên âm trong chuỗi trên:", str.match(/-\d+/g).length)
+
+    // Bài 6, 7
+    v = prompt("Nhập phần tử")
+    index = arr.indexOf(Number(v))
+    if (index >= 0) {
+        console.log("V is in the array")
+        // Dịch các phần tử bên phải V sang trái
+        for (let i = index; i < arr.length - 1; i++) {
+            arr[i] = arr[i + 1];
+        }
+        // Gán giá trị 0 cho phần tử cuối cùng
+        arr[arr.length - 1] = 0;
+        console.log(arr.join())
+    } else { console.log("V is not in the array") }
+
+    // Bài 8
+    console.log(arr.sort((a, b) => b - a))
+
+    // Bài 9
+    let a = [12, 7, 19, 3, 25, 8, 15, 4, 10, 21];
+    let b = [5, 18, 2, 14, 9, 30, 6, 22, 13, 11];
+    let c = a.concat(b);
+    console.log(c.join())
+
+</script>
+
+</html>
