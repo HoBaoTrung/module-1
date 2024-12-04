@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xây dựng lớp mô tả hình chữ nhật</title>
+</head>
+
+<body>
+    <canvas id="myCanvas" width="1368px" height="768px" style="border:1px solid #d3d3d3;">
+
+</body>
+<script>
+    const Rectangle = function (chieuDai, chieuRong) {
+        this.chieuDai = chieuDai;
+        this.chieuRong = chieuRong;
+        this.area = function () {
+            return this.chieuDai * this.chieuRong;
+        }
+        this.perimeter = function () {
+            return (this.chieuDai + this.chieuRong) * 2;
+        }
+    }
+    function getRandomHex() {
+        return Math.floor(Math.random() * 255);
+    }
+    function getRandomColor() {
+        var red = getRandomHex();
+        var green = getRandomHex();
+        var blue = getRandomHex();
+        return "rgb(" + red + "," + blue + "," + green + ")";
+    }
+
+    function createRect() {
+        var x = Math.random() * window.innerWidth;
+        var y = Math.random() * window.innerHeight;
+        var ctx = document.getElementById("myCanvas").getContext("2d");
+        var dai = Math.floor(Math.random() * 100) + 50;
+        var rong = Math.floor(Math.random() * 80) + 50;
+        const r = new Rectangle(dai, rong);
+        var color = getRandomColor();
+        ctx.beginPath();
+        ctx.fillStyle = color;
+        ctx.fillRect(x, y, r.chieuDai, r.chieuRong)
+        ctx.font = "30px Arial";
+        ctx.fillText(`Chu vi: ${r.perimeter()} \n
+        Diện tích: ${r.area()}`, 10, 50);
+
+    }
+
+    createRect()
+</script>
+
+</html>
