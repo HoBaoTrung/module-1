@@ -200,9 +200,11 @@
         while (devices.some(device => device.name === deviceName)) {
             deviceName = prompt("Tên thiết bị đã bị trùng, mời nhập lại");
         }
-        const newDevice = new Mobile(deviceName);
-        devices.push(newDevice);
-        displayDevices()
+        if (deviceName) {
+            const newDevice = new Mobile(deviceName);
+            devices.push(newDevice);
+            displayDevices()
+        }
     }
 
     function displayDevices() {
