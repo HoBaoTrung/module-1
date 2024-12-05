@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xây dựng lớp mô tả điện thoại</title>
+</head>
+<style>
+    .container {
+        margin-top: 5px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .container>div {
+        width: 23%;
+        /* Chia đều 4 div trên một hàng */
+        margin-bottom: 20px;
+        /* Khoảng cách giữa các hàng */
+        border: 1px solid #ccc;
+        /* Để dễ thấy các div */
+        padding: 10px;
+        /* Khoảng cách trong mỗi div */
+    }
+
+    @media (max-width: 768px) {
+        .container>div {
+            width: 48%;
+            /* 2 div mỗi hàng khi màn hình nhỏ */
+        }
+    }
+
+    @media (max-width: 480px) {
+        .container>div {
+            width: 100%;
+            /* 1 div mỗi hàng khi màn hình rất nhỏ */
+        }
+    }
+
+    .mobile {
+        position: relative;
+        /* Cần phải có vị trí relative để đặt các nút ở góc */
+        width: 23%;
+        margin-bottom: 20px;
+        padding: 10px;
+    }
+
+    .btn-left {
+        position: absolute;
+        top: 10px;
+        /* Đặt cách từ trên 10px */
+        right: 10px;
+        /* Đặt cách từ trái 10px */
+
+    }
+</style>
+
+<body>
+    <button onclick="addDevice()">Thêm thiết bị</button>
+    <div class="container" id="container"></div>
+</body>
+<script>
+    const Mobile = function (name) {
+        this.name = name;
+        this.battery = 95; // Pin tối đa 100
+        this.isOn = false; // Trạng thái bật/tắt
+        this.draftMessage = ""; // Tin nhắn đang soạn thảo
+        this.inbox = []; // Hộp thư đến
+        this.sentMessages = []; // Tin nhắn đã gửi
+
+        // Bật điện thoại
+        this.turnOn = function () {
+            this.isOn = true;
+            console.log(`${this.name} đã bật.`);
+        }
+
+        // Tắt điện thoại
+        this.turnOff = function () {
+            this.isOn = false;
+            console.log(`${this.name} đã tắt.`);
+        }
+
+        // Xạc pin
+        this.chargeBattery = function () {
+            const chargingInterval = setInterval(() => {
+                if (this.battery < 100) {
+                    this.battery++;
+
+                    // Cập nhật giao diện của thiết bị cụ thể
+                    const statusElement = document.getElementById(`status-${this.name}`);
+                    statusElement.innerHTML = `pin: ${this.battery}%`;
+
+                    // Vô hiệu hóa nút nếu pin đầy
+                    if (this.battery === 100) {
+                        clearInterval(chargingInterval);
+                        document.getElementById(`charge-btn-${this.name}`).disabled = true;
+                    }
+                }
+            }, 3000); // Cập nhật mỗi 3 giây
+        }
+
+
+        // Giảm pin sau mỗi thao tác
+        this.reduceBattery = function () {
+            if (this.battery > 0) this.battery--;
+            else {
+                this.turnOff();
+            }
+            const statusElement = document.getElementById(`status-${this.name}`);
+            statusElement.innerHTML = `pin: ${this.battery}%`;
+            document.getElementById(`charge-btn-${this.name}`).disabled = false;
+        }
+
+        // Soạn tin nhắn
+        this.draftMessageContent = function (content) {
+            if (this.isOn) {
+                this.draftMessage = content;
+                console.log(`${this.name} đang soạn tin: "${content}"`);
+                this.reduceBattery();
+            }
+        }
+
+        // Gửi tin nhắn
+        this.sendMessage = function (receiver) {
+            if (this.isOn) {
+                if (this.draftMessage.trim() === "") {
+                    alert(`${this.name} không thể gửi tin nhắn rỗng.`);
+                } else {
+                    receiver.receiveMessage(this.draftMessage, this.name);// Gọi hàm receiveMessage của người nhận
+                    this.sentMessages.push(`Gửi "${this.draftMessage}" đến ${receiver.name}`);
+                    this.draftMessage = ""; // Xóa tin nhắn đang soạn
+                    this.reduceBattery();
+                    this.viewSentMessages();
+                }
+            }
+        }
+
+        // Nhận tin nhắn
+        this.receiveMessage = function (message, sender) {
+            this.inbox.push(`Từ ${sender}: ${message}`);
+            if (this.isOn) {
+                this.reduceBattery();
+                this.viewInbox();
+            }
+        }
+
+        // Xem tin nhắn trong hộp thư đến
+        this.viewInbox = function () {
+            const div = document.getElementById(`received-messages-${this.name}`)
+            console.log(this.inbox)
+            div.innerHTML = ''
+            if (this.isOn) {
+                console.log(`${this.name} - Hộp thư đến:`);
+                if (this.inbox.length === 0) {
+                    div.innerHTML = "<div>Hộp thư đến trống.</div>";
+                } else {
+                    this.inbox.forEach((msg, index) => div.innerHTML += `<div>${index + 1}. ${msg}</div>`);
+                }
+                this.reduceBattery();
+            }
+        }
+
+        // Xem tin nhắn đã gửi
+        this.viewSentMessages = function () {
+            const div = document.getElementById(`sent-messages-${this.name}`)
+            div.innerHTML = ''
+            if (this.isOn) {
+                console.log(`${this.name} - Tin nhắn đã gửi:`);
+                if (this.sentMessages.length === 0) {
+                    div.innerHTML = "<div>Không có tin nhắn đã gửi.</div>";
+                } else {
+                    this.sentMessages.forEach((msg, index) => div.innerHTML += `<div>${index + 1}. ${msg}</div>`);
+                }
+                this.reduceBattery();
+            }
+        }
+    }
+
+    function getRandomHex() {
+        return Math.floor(Math.random() * 255);
+    }
+    function getRandomColor() {
+        var red = getRandomHex();
+        var green = getRandomHex();
+        var blue = getRandomHex();
+        return "rgb(" + red + "," + blue + "," + green + ")";
+    }
+
+    devices = []
+    // Khởi tạo điện thoại Nokia và iPhone
+    const nokia = new Mobile("Nokia");
+    const iphone = new Mobile("iPhone");
+
+    devices.push(nokia, iphone); // Thêm các thiết bị đã khởi tạo vào mảng
+
+    function addDevice() {
+        let deviceName = prompt("Tên thiết bị");
+        while (devices.some(device => device.name === deviceName)) {
+            deviceName = prompt("Tên thiết bị đã bị trùng, mời nhập lại");
+        }
+        const newDevice = new Mobile(deviceName);
+        devices.push(newDevice);
+        displayDevices()
+    }
+
+    function displayDevices() {
+        let device = '';
+        for (let i in devices) {
+            let options = devices
+                .filter((_, index) => index != i)  // Lọc bỏ thiết bị hiện tại
+                .map((device, index) => `<option value="${devices.indexOf(device)}">${device.name}</option>`)  // Dùng index gốc của thiết bị
+                .join('');
+            device += `
+        <div class="mobile" id="device-${i}" style="border: 3px solid ${getRandomColor()};">
+            <h3>${devices[i].name} (<span id="status-${devices[i].name}">pin: ${devices[i].battery}%</span>)</h3>
+            <span class="btn-left">
+                <button id="toggle-btn-${i}" style="margin-bottom: 3px;" onclick="toggleDevice(${i})">
+                    ${devices[i].isOn ? "Tắt" : "Bật"} thiết bị
+                </button><br>
+                <button id="charge-btn-${devices[i].name}" 
+                    ${devices[i].battery === 100 ? "disabled" : ""} 
+                    onclick="devices[${i}].chargeBattery()">
+                    Xạc pin
+                </button>
+            </span>
+            <form ${devices[i].isOn ? "" : 'style="display: none;"'}  id="action-device-${i}">
+            <label for="">Soạn tin nhắn</label><br>
+            <input type="text" id="message-${i}" placeholder="Tin nhắn">
+            <select name="" id="receiver-${i}">
+                <option value="">Chọn thiết bị nhận</option>
+                ${options}
+            </select>
+            <button type="button" onclick="handleSendMessage(${i})">Gửi</button>
+            <fieldset>
+                <legend>Tin đã gửi</legend>
+                <button type="button" onclick="toggleVisibility('sent-messages-${devices[i].name}',this,${i})">Xem</button>
+                <div style="display: none;" id="sent-messages-${devices[i].name}"></div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Tin đã nhận</legend>
+                <button type="button" onclick="toggleVisibility('received-messages-${devices[i].name}',this,${i})">Xem</button>
+                <div style="display: none;" id="received-messages-${devices[i].name}"></div>
+            </fieldset>
+            </form>
+        </div>`;
+        }
+        document.getElementById("container").innerHTML = device;
+    }
+    function toggleVisibility(id, button, index) {
+        const div = document.getElementById(id);
+        if (div.style.display === 'none') {
+            div.style.display = 'block';
+            button.innerText = 'Ẩn';
+            if (String(id).includes("received")) {
+                devices[index].viewInbox()
+            } else {
+                devices[index].viewSentMessages()
+            }
+
+        } else {
+            div.style.display = 'none';
+            button.innerText = 'Xem';
+        }
+    }
+    function toggleDevice(index) {
+        const device = devices[index];
+        device.isOn = !device.isOn;
+
+        // Cập nhật trực tiếp nút bấm và trạng thái pin
+        const toggleBtn = document.getElementById(`toggle-btn-${index}`);
+        let status = "Bật thiết bị"
+        let display = "none"
+        if (device.isOn) {
+            status = "Tắt thiết bị";
+            display = "block"
+        }
+        document.getElementById("action-device-" + index).style.display = display
+        toggleBtn.innerHTML = status;
+    }
+
+    function handleSendMessage(senderIndex) {
+        const messageInput = document.getElementById(`message-${senderIndex}`);
+        const receiverIndex = document.getElementById(`receiver-${senderIndex}`).value;
+
+        const message = messageInput.value.trim();
+
+        if (!receiverIndex) {
+            alert("Vui lòng chọn thiết bị nhận.");
+            return;
+        }
+
+        const sender = devices[senderIndex];
+        const receiver = devices[receiverIndex];
+        sender.draftMessage = message;
+        sender.sendMessage(receiver);
+        messageInput.value = '';
+    }
+
+
+    displayDevices()
+
+</script>
+
+</html>
