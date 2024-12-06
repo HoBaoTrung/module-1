@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ứng dụng nhỏ mô phỏng câu chuyện Adam và Eva</title>
+</head>
+
+<body>
+    <div id="story"></div>
+</body>
+<script>
+    class Apple {
+        #weight; // Private field
+
+        constructor() {
+            this.#weight = 10;
+        }
+
+        decrease() {
+            this.#weight -= 1;
+        }
+
+        isEmpty() {
+            return this.#weight == 0;
+        }
+
+        getWeight() {
+            return this.#weight;
+        }
+    }
+
+    class Human {
+        #name;
+        #gender;
+        #weight;
+        #apple;
+        constructor(name, gender, weight, apple) {
+            this.#weight = weight;
+            this.#gender = gender;
+            this.#name = name;
+            this.#apple = apple;
+        }
+
+        isMale() { return this.#gender; }
+        setGender(gender) { this.#gender = gender; }
+        checkApple() {
+            return this.#apple.isEmpty();
+        }
+
+        eatApple() {
+            if (!this.#apple.isEmpty()) {
+                this.#apple.decrease();
+                this.#weight += 1;
+            }
+        }
+
+        say(str) { }
+
+        getName() { return this.#name; }
+        setName(name) { this.#name = name; }
+        getWeight() { return this.#weight; }
+        setWeight(weight) { this.#weight = weight }
+    }
+
+    let apple = new Apple();
+    let adam = new Human("Adam", true, 70, apple)
+    let eva = new Human("Eva", false, 55, apple)
+    let story = "";
+
+    while (!apple.isEmpty()) {
+        adam.eatApple();
+        story += `${adam.getName()} ăn táo\n
+                  Quả táo còn: ${apple.getWeight()} đơn vị\n
+                  Cân nặng của ${adam.getName()} là: ${adam.getWeight()} đơn vị\n \n`;
+        eva.eatApple();
+        story += `${eva.getName()} ăn táo\n
+                  Quả táo còn: ${apple.getWeight()} đơn vị\n
+                  Cân nặng của ${eva.getName()} là: ${eva.getWeight()} đơn vị\n
+                  --------------------------\n`;
+    }
+
+    document.getElementById("story").innerText = story;
+
+</script>
+
+</html>
