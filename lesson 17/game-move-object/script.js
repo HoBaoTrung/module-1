@@ -1,8 +1,9 @@
-function Hero(image, top, left, size) {
+function Hero(image, top, left, size, speed) {
   this.image = image;
   this.top = top;
   this.left = left;
   this.size = size;
+  this.speed = speed;
 
   this.getHeroElement = function () {
     return '<img id="hero" width="' + this.size + '"' +
@@ -12,20 +13,20 @@ function Hero(image, top, left, size) {
   }
 
   this.moveRight = function () {
-    this.left += 20;
+    this.left += this.speed;
   }
   this.moveLeft = function () {
-    this.left -= 20;
+    this.left -= this.speed;
   }
   this.moveTop = function () {
-    this.top -= 20;
+    this.top -= this.speed;
   }
   this.moveBottom = function () {
-    this.top += 20;
+    this.top += this.speed;
   }
 }
 
-var hero = new Hero('pikachu.png', 20, 30, 200);
+var hero = new Hero('pikachu.png', 20, 30, 200, 100);
 
 
 // Điều khiển bằng phím mũi tên
