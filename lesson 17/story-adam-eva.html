@@ -67,7 +67,7 @@
     let apple = new Apple();
     let adam = new Human("Adam", true, 70, apple)
     let eva = new Human("Eva", false, 55, apple)
-    let story = "";
+    let story = `Ban đầu: ${adam.getName()}-${adam.getWeight()}đv, ${eva.getName()}-${eva.getWeight()}đv, Táo: ${apple.getWeight()}đv\n=======\n`;
 
     while (!apple.isEmpty()) {
         adam.eatApple();
