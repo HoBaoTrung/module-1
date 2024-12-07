@@ -12,19 +12,28 @@
 </body>
 <script>
     class Animal {
-        constructor(name, weight, speed) {
-            this.name = name;
-            this.weight = weight;
-            this.speed = speed;
-        }
         name;
         weight;
         speed;
         sound;
+        constructor(name, weight, speed) {
+            this.name = name;
+            this.weight = weight;
+            this.speed = speed;
+            this.sound = this.getDefaultSound();
+        }
+        getDefaultSound() {
+            return ""; // Giá trị mặc định cho lớp cha, lớp con sẽ ghi đè
+        }
         makeVoice(sound) { this.sound = sound; }
     }
     class Mouse extends Animal {
         isDead;
+
+        getDefaultSound() {
+            return "Chít chít"; // Âm thanh mặc định cho chuột
+        }
+
         getStatus() {
             if (!this.isDead) {
                 alert("Chuột sống");
@@ -44,7 +53,12 @@
 
     class Cat extends Animal {
         mouse;
+
+        getDefaultSound() {
+            return "meo meo"; // Âm thanh mặc định cho mèo
+        }
         setMouse(mouse) { this.mouse = mouse }
+
         catchTheMouse() {
             if (this.mouse.speed < this.speed) {
                 alert("Mèo đã bắt được chuột")
