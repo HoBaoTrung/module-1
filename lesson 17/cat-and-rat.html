@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mô phỏng lại quá trình mèo bắt chuột và ăn chuột</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    class Animal {
+        constructor(name, weight, speed) {
+            this.name = name;
+            this.weight = weight;
+            this.speed = speed;
+        }
+        name;
+        weight;
+        speed;
+        sound;
+        makeVoice(sound) { this.sound = sound; }
+    }
+    class Mouse extends Animal {
+        isDead;
+        getStatus() {
+            if (!this.isDead) {
+                alert("Chuột sống");
+            } else {
+                alert("Chuột chết");
+            }
+        }
+
+        die() {
+            return this.isDead = true;
+        }
+
+        noDie() {
+            return this.isDead = false;
+        }
+    }
+
+    class Cat extends Animal {
+        mouse;
+        setMouse(mouse) { this.mouse = mouse }
+        catchTheMouse() {
+            if (this.mouse.speed < this.speed) {
+                alert("Mèo đã bắt được chuột")
+            } else {
+                alert("Mèo không bắt được chuột")
+            }
+        }
+
+        eatTheMouse() {
+            if (!this.mouse.isDead) {
+                this.weight += this.mouse.weight;
+                this.mouse.die();
+                alert("Chuột đã bị mèo ăn");
+            }
+        }
+    }
+
+    let Rat = new Mouse("Rat", 10, 100);
+    let Tom = new Cat("Tom", 20, 200);
+    Tom.setMouse(Rat);
+    Rat.noDie()
+
+    Tom.catchTheMouse();
+    Tom.eatTheMouse();
+    console.log(Tom.weight);  
+</script>
+
+</html>
