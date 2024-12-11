@@ -113,15 +113,18 @@
 
         function editProduct(index) {
             let newProductName = prompt("Chỉnh sửa tên sản phẩm", products[index])
-            if (newProductName !== null) {
+            if (newProductName) {
                 products[index] = newProductName
                 displayProducts();
             }
         }
 
         function deleteProduct(index) {
-            products.splice(index, 1);
-            displayProducts();
+            if (confirm("Bạn có muốn xóa sản phẩm")) {
+                products.splice(index, 1);
+                displayProducts();
+            }
+
         }
 
         // Hiển thị danh sách sản phẩm khi tải trang
