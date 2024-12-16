@@ -52,7 +52,8 @@
 
     <script>
         function handleLetGo(typePlay) {
-            window.location.href = "/case-study/caro-game.html?type=" + typePlay ;
+            const baseUrl = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, "");
+            window.location.href = `${baseUrl}/case-study/game.html`;
         }
     </script>
 </body>
