@@ -8,7 +8,7 @@
 #gameBoard-wrapper {
     max-width: 40rem;
     max-height: 40rem;
-    overflow: auto;  
+    overflow: auto;
 }
 
 #winResult {
@@ -25,20 +25,21 @@
     /* Đảm bảo padding không làm thay đổi kích thước */
     margin-right: 20px;
     text-align: center; /* Căn giữa nội dung trong #winResult */
+    opacity: 0.95; /* Độ trong suốt nhẹ */
 }
 
 table {
     border-collapse: collapse;
     background-color: #f9f9f9;
-    /* Màu nền bảng */
+    opacity: 0.95;
 }
 
 #gameBoard {
     font-family: Arial, sans-serif;
     font-size: 16px;
-    width: auto; /* Bảng tự động mở rộng theo nội dung */
-    table-layout: fixed; /* Điều chỉnh độ rộng của bảng */
-    border-collapse: collapse;
+    width: max-content;
+    border-collapse: collapse; 
+    
 }
 
 td {
