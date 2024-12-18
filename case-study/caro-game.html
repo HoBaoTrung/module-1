@@ -45,8 +45,8 @@
         </div>
         <div class="button">
             <div onclick="handleBack()" id="back" title="Quay lại trang chủ">↩️</div>
-            <div onclick="switchMusic()" id="playPauseMusic"></div>
-            <audio id="myMusic" src="music.mp3"></audio>
+            <div id="playPauseMusic" onclick="switchMusic()">🔊</div>
+            <audio id="myMusic" src="music.mp3" muted autoplay></audio>
         </div>
     </div>
 
@@ -65,6 +65,12 @@
                 music.innerText = `🔇`
             }
         }
+
+        window.addEventListener("load", () => {
+            onMusic = true;
+            const audio = document.getElementById("myMusic");
+            audio.muted = false; // Bỏ mute sau khi audio bắt đầu phát
+        });
 
         function handleBack() {
             const baseUrl = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, "");
@@ -334,7 +340,7 @@
         }
 
         start();
-        switchMusic()
+        // switchMusic()
     </script>
 
 </body>
