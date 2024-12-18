@@ -120,7 +120,7 @@
                 let element = document.getElementById(`cell-${x}-${y}`);
                 if (!cell.value) {
                     cell.value = element.innerHTML = this.turn;
-                    this.checkWin(x, y, this.turn);
+                    this.isOver = this.checkWin(x, y, this.turn);
                     this.turn = this.turn === "X" ? "O" : "X";
                     element.style.cursor = "not-allowed";
                     this.lastMoves.add([x, y]); // Thêm ô vừa đánh vào vùng tìm kiếm
@@ -187,7 +187,6 @@
                     if (count >= 5) {
                         highlightWinningCells(winningCells);
                         document.getElementById("result").innerHTML += `${round}. ${player} thắng<br>`;
-                        this.isOver = true;
                         round++;
                         return true;
                     }
@@ -205,7 +204,6 @@
                 let bestMove = null;
 
                 const possibleMoves = this.getDynamicMoves(); // Giới hạn tìm kiếm
-
                 for (let move of possibleMoves) {
                     const [x, y] = move;
                     this.board.cells[x][y].value = "O";
@@ -235,16 +233,18 @@
                                 ny >= 0 && ny < this.board.size &&
                                 this.board.cells[nx][ny].value === this.EMPTY
                             ) {
-                                moves.add([nx, ny]);
+                                moves.add(`${nx}-${ny}`); // Thêm chuỗi để nhận diện set
                             }
                         }
                     }
                 });
-                return Array.from(moves);
+
+                return Array.from(moves).map(coord => coord.split('-').map(Number)); // Chuyển chuỗi về mảng [x, y]
             };
 
+
             this.minimax = function (depth, alpha, beta, isMaximizing) {
-                if (this.board.isOver || depth === 0) {
+                if (depth === 0) {
                     return this.evaluateBoard();
                 }
 
@@ -283,15 +283,17 @@
                 const evaluateLine = (line) => {
                     let countO = 0;
                     let countX = 0;
+                    const attackWeight = 1; // Trọng số tấn công
+                    const defenseWeight = 1.2; // Trọng số phòng thủ
                     for (let cell of line) {
                         if (cell === "O") countO++;
                         else if (cell === "X") countX++;
                     }
 
                     if (countO > 0 && countX === 0) {
-                        score += Math.pow(10, countO);
+                        score += attackWeight * Math.pow(10, countO);
                     } else if (countX > 0 && countO === 0) {
-                        score -= Math.pow(10, countX);
+                        score -= defenseWeight * Math.pow(10, countX);
                     }
                 };
 
@@ -302,8 +304,6 @@
                         let ny = y + i * dy;
                         if (nx >= 0 && nx < this.board.size && ny >= 0 && ny < this.board.size) {
                             line.push(this.board.cells[nx][ny].value);
-                        } else {
-                            line.push(null);
                         }
                     }
                     return line;
