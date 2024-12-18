@@ -157,8 +157,8 @@
                     [1, -1] // Hướng Chéo phụ
                 ];
 
-                let winningCells = [[x, y]];
                 for (let [dx, dy] of directions) {
+                    let winningCells = [[x, y]];
                     let count = 1;
                     for (let step = 1; step < 5; step++) {
                         let nx = x + step * dx;
@@ -303,29 +303,42 @@
                     }
                 };
 
-                const getLine = (x, y, dx, dy, length = 5) => {
+                const getLine = (x, y, dx, dy) => {
                     let line = [];
-                    for (let i = 0; i < length; i++) {
+                    for (let i = 0; i <= 4; i++) {
                         let nx = x + i * dx;
                         let ny = y + i * dy;
                         if (nx >= 0 && nx < this.board.size && ny >= 0 && ny < this.board.size) {
                             line.push(this.board.cells[nx][ny].value);
-                        }
+                        } else break;
                     }
                     return line;
                 };
-                for (let x = 0; x < this.board.size; x++) {
-                    for (let y = 0; y < this.board.size; y++) {
-                        evaluateLine(getLine(x, y, 0, 1)); // Horizontal
-                        evaluateLine(getLine(x, y, 1, 0)); // Vertical
-                        evaluateLine(getLine(x, y, 1, 1)); // Diagonal down-right
-                        evaluateLine(getLine(x, y, 1, -1)); // Diagonal up-right
-                    }
-                }
 
+                const evaluateDynamicLines = () => {
+                   const directions = [
+                        [0, 1],  // Horizontal
+                        [1, 0],  // Vertical
+                        [1, 1],  // Diagonal down-right
+                        [1, -1], // Diagonal up-right
+                    ];
+
+                    this.board.lastMoves.forEach(([x, y]) => { // Lặp qua các nước đi gần nhất 
+                        directions.forEach(([dx, dy]) => { // Duyệt qua các hướng từ nước đi hiện tại (kiểm tra 4 hướng)
+                            for (let i = -4; i <= 0; i++) { // Duyệt kiểm tra trước nước vừa đánh có vượt khỏi khu vực chơi
+                                const startX = x + i * dx;
+                                const startY = y + i * dy;
+                                if (
+                                    startX >= 0 && startX < this.board.size &&
+                                    startY >= 0 && startY < this.board.size
+                                ) evaluateLine(getLine(startX, startY, dx, dy));
+                            }
+                        });
+                    });
+                };
+                evaluateDynamicLines();
                 return score;
             };
-
         }
 
         let gameBoard;
