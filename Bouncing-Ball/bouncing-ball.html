@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bouncing Ball</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+    <button style="position: absolute; top: 10; left: 10;" onclick="resetGame()">reset</button>
+    <script>
+        // Constants for game configuration
+        const GAME_WIDTH = 800;
+        const GAME_HEIGHT = 600;
+        const BALL_SIZE = 20;
+        const BAR_WIDTH = 100;
+        const BAR_HEIGHT = 20;
+        const BAR_SPEED = 8;
+        const BALL_SPEED = 4;
+
+        // Biến lưu trạng thái trò chơi
+        let ball = {
+            x: GAME_WIDTH / 2, // Tọa độ X ban đầu của bóng
+            y: GAME_HEIGHT / 2, // Tọa độ Y ban đầu của bóng
+            dx: BALL_SPEED, // Vận tốc X của bóng
+            dy: BALL_SPEED, // Vận tốc Y của bóng
+        };
+
+        let bar = {
+            x: (GAME_WIDTH - BAR_WIDTH) / 2, // Tọa độ X ban đầu của thanh đỡ
+            y: GAME_HEIGHT - BAR_HEIGHT - 50, // Tọa độ Y của thanh đỡ
+            dx: 0, // Vận tốc X của thanh đỡ
+        };
+
+        let gameOver = false;
+
+        // Khởi tạo canvas và context vẽ
+        const canvas = document.createElement('canvas');
+        canvas.width = GAME_WIDTH;
+        canvas.height = GAME_HEIGHT;
+        canvas.style.position = 'absolute';
+        canvas.style.top = '50px';
+        document.body.appendChild(canvas);
+        const ctx = canvas.getContext('2d');
+
+        // Hàm khởi động lại trò chơi
+        function resetGame() {
+            ball.x = GAME_WIDTH / 2;
+            ball.y = GAME_HEIGHT / 2;
+            ball.dx = BALL_SPEED;
+            ball.dy = BALL_SPEED;
+            bar.x = (GAME_WIDTH - BAR_WIDTH) / 2;
+            bar.dx = 0;
+            gameOver = false;
+            gameLoop();
+        }
+
+        // Event listeners for keyboard input
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') bar.dx = -BAR_SPEED;
+            if (e.key === 'ArrowRight') bar.dx = BAR_SPEED;
+        });
+
+        document.addEventListener('keyup', (e) => {
+            if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') bar.dx = 0;
+        });
+
+        // Vòng lặp trò chơi
+        function gameLoop() {
+            if (!gameOver) {
+                update(); // Cập nhật trạng thái trò chơi
+                render(); // Vẽ lại màn hình
+                requestAnimationFrame(gameLoop); // Tiếp tục vòng lặp
+            }
+        }
+
+        // Update game state
+        function update() {
+            // Update ball position
+            ball.x += ball.dx;
+            ball.y += ball.dy;
+
+            // Va chạm của bóng với viền màn hình
+            if (ball.x <= 0 || ball.x + BALL_SIZE >= GAME_WIDTH) ball.dx *= -1; // Bật lại nếu chạm viền ngang
+            if (ball.y <= 0) ball.dy *= -1; // Bật lại nếu chạm viền trên
+
+            // Va chạm của bóng với thanh đỡ
+            if (
+                ball.y + BALL_SIZE >= bar.y && // Bóng chạm vào thanh đỡ từ phía trên
+                ball.x + BALL_SIZE >= bar.x && // Bóng trong phạm vi chiều rộng thanh đỡ
+                ball.x <= bar.x + BAR_WIDTH
+            ) {
+                ball.dy *= -1; // Đổi hướng bóng theo trục Y
+                ball.dx += bar.dx * 0.1; // Thay đổi góc bay của bóng dựa vào tốc độ thanh đỡ
+            }
+
+            // Ball falls out of the screen
+            if (ball.y > GAME_HEIGHT) {
+                gameOver = true;
+                Swal.fire({
+                    title: "Game Over",
+                    padding: "3em",
+                    color: "black",
+                    background: "#fff url(https://i.pinimg.com/originals/c6/8d/e9/c68de9853547c385dddd3a0d929d4d42.gif)",
+                    backdrop: `
+                        rgba(0,0,123,0.4)
+                        url("https://media.tenor.com/PDdj85iOO1sAAAAM/nyan-cat-rainbow.gif")
+                        left top
+                        no-repeat
+                    `
+                });
+            }
+
+            // Update bar position
+            bar.x += bar.dx;
+
+            // Ngăn thanh đỡ di chuyển ra ngoài khu vực chơi
+            if (bar.x < 0) bar.x = 0;
+            if (bar.x + BAR_WIDTH > GAME_WIDTH) bar.x = GAME_WIDTH - BAR_WIDTH;
+
+        }
+
+        // Render game state
+        function render() {
+            // Clear canvas
+            ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+
+            // Draw game border
+            ctx.strokeStyle = 'black';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+
+            // Draw ball
+            ctx.fillStyle = 'red';
+            ctx.beginPath();
+            ctx.arc(ball.x + BALL_SIZE / 2, ball.y + BALL_SIZE / 2, BALL_SIZE / 2, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.closePath();
+
+            // Draw bar
+            ctx.fillStyle = 'blue';
+            ctx.fillRect(bar.x, bar.y, BAR_WIDTH, BAR_HEIGHT);
+        }
+
+        // Start the game
+        gameLoop();
+
+    </script>
+</body>
+
+</html>
